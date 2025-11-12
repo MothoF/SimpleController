@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>a list of the tasks</title>
+</head>
+<body>
+    <h1>Welcome to your tasks page ${username}</h1>
+    <p th:if="${#lists.isEmpty(tasks)}">
+        You have no tasks at this point.
+    </p>
+    <div th:unless="${#lists.isEmpty(tasks)}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Task ID</th>
+                    <th>Task Description</th>
+                    <th>Task Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="task : ${tasks}">
+                    <tr>
+                        <td th:text="${task.id}">0</td>
+                        <td th:text="${task.description}">This is the task description</td>
+                        <td th:text="${task.deadline}">This is the task deadline</td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

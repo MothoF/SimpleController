@@ -1,0 +1,18 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#task_form{
+    & input{
+        display: block;
+        margin-bottom: 1vh;
+        width: 15vw;
+
+        &#description, &#deadline{
+            width: 14.5vw;
+        }
+    }
+}

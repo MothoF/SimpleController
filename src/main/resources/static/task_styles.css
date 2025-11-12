@@ -1,0 +1,39 @@
+div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table{
+    margin-bottom: 2.5vh;
+    & th{
+        padding-left: 0;
+        padding-right: 0;
+        border-bottom: 2px double black;
+    }
+
+    & td{
+        justify-content: center;
+    }
+}
+
+.task_description{
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    height: 2vh;
+    width: 4.75vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    background-color: black;
+    border-radius: 10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
