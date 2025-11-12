@@ -1,5 +1,6 @@
 package com.prepforfullstack.SimpleController.Tasks;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +36,7 @@ public class TasksController {
         return "tasks_display";
     }
 
-    @RequestMapping(value = "add_task", method =  {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "add_task", method =  {RequestMethod.GET})
     public String addTask(Model model){
         Task task = new Task("Anonymous Description","ManMan",LocalDate.now());
         model.addAttribute("task",task);
@@ -43,7 +44,7 @@ public class TasksController {
     }
 
     @RequestMapping(value = "tasks", method = RequestMethod.POST)
-    public String addTask(Model model, Task task){
+    public String addTask(Model model, @Valid Task task){
         String sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
         task.setTaskMaster(sessionUser);
         tasksService.addNewTask(task);

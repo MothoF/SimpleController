@@ -1,12 +1,17 @@
 package com.prepforfullstack.SimpleController.Tasks;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class Task {
     private int id;
     private int task_number;
+    @Size(min=10, message = "Enter at least 10 characters")
     private String task_description;
     private String task_master;
+    @Future(message = "Deadline must be a future date")
     private LocalDate task_deadline;
 
     public Task(String description, String master, LocalDate deadline){
