@@ -64,8 +64,8 @@ public class Task {
         task_number = number;
     }
 
-    public void setTaskDeadline(String deadlineString){
-        task_deadline = LocalDate.parse(deadlineString);
+    public void setTaskDeadline(LocalDate deadline){
+        task_deadline = deadline;
     }
 
     public void setTaskDescription(String description){

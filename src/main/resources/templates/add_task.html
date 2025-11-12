@@ -12,9 +12,9 @@
     <div id="task_form">
         <form method="post" action="tasks">
             <label for="description">Task Description:</label>
-            <input th:field="${task.taskDescription}" type="text" maxlength="50" id="description" name="description">
+            <input th:field="${task.taskDescription}" type="text" maxlength="50" id="description" name="description" required = "required">
             <label for="deadline">Task Deadline:</label>
-            <input th:field="${task.taskDeadline}" type="date" id="deadline" name="deadline">
+            <input th:field="${task.taskDeadline}" type="date" id="deadline" name="deadline" required = "required">
             <input type="submit">
         </form>
     </div>

@@ -46,10 +46,7 @@ public class TasksController {
     public String addTask(Model model, Task task){
         String sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
         task.setTaskMaster(sessionUser);
-//        LocalDate deadlineDate = LocalDate.parse(deadline);
-//        System.out.println("Deadline date = " + deadlineDate);
         tasksService.addNewTask(task);
-//        tasksService.addNewTask(new Task(description,sessionUser, LocalDate.parse(deadlineDate.toString())));
         System.out.println("You have successfully added a new task @"+sessionUser);
         return "redirect:/tasks";
     }
