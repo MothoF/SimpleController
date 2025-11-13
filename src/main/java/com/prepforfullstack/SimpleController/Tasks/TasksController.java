@@ -64,4 +64,34 @@ public class TasksController {
         tasksService.deleteTaskById(taskId);
         return "redirect:/tasks";
     }
+
+    @RequestMapping(value = "update", method = RequestMethod.GET)
+    public String getTaskUpdateForm(@RequestParam String id, Model model){
+        int taskId =  Integer.parseInt(id);
+        Task task = tasksService.getTaskById(taskId);
+        model.addAttribute("task",task);
+        return "update_task";
+    }
+
+    @RequestMapping(value = "task", method = RequestMethod.POST)
+    public String updateTask(Model model, @Valid Task task, BindingResult result){
+        if (result.hasErrors()){
+            return "update_task";
+        }
+
+        Task oldTask = (Task) model.getAttribute("task");
+        assert oldTask != null;
+        System.out.println("oldTask Description = " + oldTask.getTaskDescription());
+
+        if (!task.getTaskDescription().equals(oldTask.getTaskDescription()) && !task.getTaskDeadline().equals(oldTask.getTaskDeadline())){
+            oldTask.setTaskDescription(task.getTaskDescription());
+            oldTask.setTaskDeadline(task.getTaskDeadline());
+        } else if (!task.getTaskDescription().equals(oldTask.getTaskDescription())){
+            oldTask.setTaskDescription(task.getTaskDescription());
+        } else {
+            oldTask.setTaskDeadline(task.getTaskDeadline());
+        }
+
+        return "redirect:/tasks";
+    }
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new task</title>
+    <link rel="stylesheet" th:href="@{/add_task_styles.css}" type="text/css"/>
+</head>
+<body>
+<div>
+    <h2>Update the form below:</h2>
+</div>
+<div id="task_form">
+    <form method="post" action="task" th:object="${task}">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="errors">Please correct the errors below.</p>
+        </div>
+        <label for="description">Task Description:</label>
+        <input th:field="*{taskDescription}" type="text" maxlength="50" id="description" name="description" required = "required">
+        <div th:if="${#fields.hasErrors('taskDescription')}" th:errors="*{taskDescription}" class="errors"></div>
+        <label for="deadline">Task Deadline:</label>
+        <input th:field="*{taskDeadline}" type="date" id="deadline" name="deadline" required = "required">
+        <div th:if="${#fields.hasErrors('taskDeadline')}" th:errors="*{taskDeadline}" class="errors"></div>
+        <input type="submit">
+    </form>
+</div>
+</body>
+</html>
