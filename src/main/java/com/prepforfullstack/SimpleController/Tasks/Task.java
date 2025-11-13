@@ -13,6 +13,7 @@ public class Task {
     private String task_master;
     @Future(message = "Deadline must be a future date")
     private LocalDate task_deadline;
+    private String task_countdown;
 
     public Task(String description, String master, LocalDate deadline){
         task_description = description;
@@ -29,6 +30,18 @@ public class Task {
 
     public int getTaskNumber() {
         return task_number;
+    }
+
+    public String getTaskCountdown(){
+        int difference = task_deadline.compareTo(LocalDate.now());;
+
+        if (LocalDate.now().getYear() != task_deadline.getYear()){
+            return difference > 0 ? difference+" year(s) to go": (-1*difference) + " year(s) to go";
+        } else if ((LocalDate.now().getYear() == task_deadline.getYear()) && LocalDate.now().getMonth() != task_deadline.getMonth()){
+            return difference > 0 ? difference +" month(s) to go" : (-1*difference) + " month(s) to go";
+        }
+
+        return difference > 0 ? difference + " day(s) to go" : (-1*difference) + " day(s) to go";
     }
 
     public String getTaskMaster(){

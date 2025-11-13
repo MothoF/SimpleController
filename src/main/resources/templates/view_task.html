@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <title>View a task in great detail</title>
+        <link rel="stylesheet" th:href="@{/view_task_styles.css}" type="text/css"/>
+    </head>
+    <body>
+        <div class="task_details">
+            <div class="title">
+                <h1>Task Details:</h1>
+            </div>
+            <div class="details">
+                <p>
+                    Task Number: <span th:text="${task.taskNumber}">2</span>
+                </p>
+                <p>
+                    Task Description: <span th:text="${task.taskDescription}"></span>
+                </p>
+                <p>
+                    Task Deadline: <span th:text="${task.taskDeadline}"></span>
+                </p>
+                <p>
+                    Countdown to deadline: <span th:text="${task.taskCountdown}"></span>
+                </p>
+            </div>
+            <div class="buttons">
+                <a id="delete_button" th:href="'/delete?id='+${task.id}">Delete</a>
+                <a id="update_button" th:href="'/update?id='+${task.id}">Update</a>
+            </div>
+        </div>
+    </body>
+</html>

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,12 +24,6 @@ public class TasksController {
     public String getTasksList(Model model){
         String sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
         List<Task> userTasks = tasksService.getTaskByUser(sessionUser);
-        int idForTask = 0;
-
-        for (Task task : userTasks){
-            idForTask += 1;
-            task.setTaskNumber(idForTask);
-        }
 
         System.out.println("sessionUser = " + sessionUser);
         model.addAttribute("username",sessionUser);
@@ -36,7 +31,7 @@ public class TasksController {
         return "tasks_display";
     }
 
-    @RequestMapping(value = "add_task", method =  {RequestMethod.GET})
+    @RequestMapping(value = "add_task", method = {RequestMethod.GET})
     public String addTask(Model model){
         Task task = new Task("Anonymous Description","ManMan",LocalDate.now());
         model.addAttribute("task",task);
@@ -44,7 +39,10 @@ public class TasksController {
     }
 
     @RequestMapping(value = "tasks", method = RequestMethod.POST)
-    public String addTask(Model model, @Valid Task task){
+    public String addTask(Model model, @Valid @ModelAttribute("task") Task task, BindingResult result){
+        if (result.hasErrors()){
+            return "add_task";
+        }
         String sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
         task.setTaskMaster(sessionUser);
         tasksService.addNewTask(task);
@@ -52,18 +50,18 @@ public class TasksController {
         return "redirect:/tasks";
     }
 
-//    @RequestMapping(value = "add_task", method =  {RequestMethod.GET, RequestMethod.POST})
-//    public String addTask(){
-//        return "add_task";
-//    }
-//
-//    @RequestMapping(value = "tasks", method = RequestMethod.POST)
-//    public String addTask(@RequestParam String description, @RequestParam String deadline, Model model ){
-//        String sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
-//        LocalDate deadlineDate = LocalDate.parse(deadline);
-//        System.out.println("Deadline date = " + deadlineDate);
-//        tasksService.addNewTask(new Task(description,sessionUser, LocalDate.parse(deadlineDate.toString())));
-//        System.out.println("You have successfully added a new task @"+sessionUser);
-//        return "redirect:/tasks";
-//    }
+    @RequestMapping(value = "task", method = RequestMethod.GET)
+    public String getTaskById(@RequestParam String id, Model model){
+        int taskId =  Integer.parseInt(id);
+        Task task = tasksService.getTaskById(taskId);
+        model.addAttribute("task",task);
+        return "view_task";
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    public String deleteTaskById(@RequestParam String id){
+        int taskId =  Integer.parseInt(id);
+        tasksService.deleteTaskById(taskId);
+        return "redirect:/tasks";
+    }
 }

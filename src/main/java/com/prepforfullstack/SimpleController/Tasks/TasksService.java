@@ -25,14 +25,26 @@ public class TasksService {
         allTasks.add(task);
     }
 
-//    public List<Task> getAllTasks(){
-//        return allTasks;
-//    }
+    public Task getTaskById(int id){
+        return allTasks.get(id-1);
+    }
+
+    public void deleteTaskById(int id){
+        allTasks.remove(id-1);
+
+        for (Task task : allTasks){
+            if(task.getId() > id){
+                int taskId = task.getId();
+                task.setId(taskId-1);
+            }
+        }
+    }
 
     public List<Task> getTaskByUser(String userName){
         List<Task> tasks = new ArrayList<>();
         for(Task task : allTasks){
             if (task.getTaskMaster().equals(userName)){
+                task.setTaskNumber(tasks.size()+1);
                 tasks.add(task);
             }
         }

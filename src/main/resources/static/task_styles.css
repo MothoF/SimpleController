@@ -4,6 +4,13 @@ div{
     align-items: center;
 }
 
+#intro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 table{
     margin-bottom: 2.5vh;
     & th{
@@ -20,9 +27,15 @@ table{
 .task_description{
     padding-left: 1vw;
     padding-right: 1vw;
+    &>a{
+        color: black;
+        &:hover{
+            cursor: pointer;
+        }
+    }
 }
 
-a{
+#btn{
     text-decoration: none;
     color: white;
     height: 2vh;
@@ -37,3 +50,10 @@ a{
         cursor: pointer;
     }
 }
+
+/*.descript_link{*/
+/*    color: black;*/
+/*    &:hover{*/
+/*        cursor: pointer;*/
+/*    }*/
+/*}*/

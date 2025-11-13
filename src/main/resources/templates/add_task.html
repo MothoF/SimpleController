@@ -10,11 +10,16 @@
         <h2>Fill out the form below:</h2>
     </div>
     <div id="task_form">
-        <form method="post" action="tasks">
+        <form method="post" action="tasks" th:object="${task}">
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="errors">Please correct the errors below.</p>
+            </div>
             <label for="description">Task Description:</label>
-            <input th:field="${task.taskDescription}" type="text" maxlength="50" id="description" name="description" required = "required">
+            <input th:field="*{taskDescription}" type="text" maxlength="50" id="description" name="description" required = "required">
+            <div th:if="${#fields.hasErrors('taskDescription')}" th:errors="*{taskDescription}" class="errors"></div>
             <label for="deadline">Task Deadline:</label>
-            <input th:field="${task.taskDeadline}" type="date" id="deadline" name="deadline" required = "required">
+            <input th:field="*{taskDeadline}" type="date" id="deadline" name="deadline" required = "required">
+            <div th:if="${#fields.hasErrors('taskDeadline')}" th:errors="*{taskDeadline}" class="errors"></div>
             <input type="submit">
         </form>
     </div>

@@ -1,0 +1,54 @@
+.task_details{
+    margin: auto;
+    width: 50vw;
+    background-color: ghostwhite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+}
+
+.details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & p{
+        font-weight: bold;
+    }
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-around;
+
+    & #delete_button, & #update_button{
+        width: 5vw;
+        height: 2.5vh;
+        text-decoration: none;
+        background-color: black;
+        color: white;
+        border-radius: 5px;
+        
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    & #delete_button{
+        padding-left: 2vw;
+        margin-right: 2.5vw;
+    }
+
+    & #update_button{
+        padding-left: 2vw;
+    }
+}
