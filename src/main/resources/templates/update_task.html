@@ -10,7 +10,7 @@
     <h2>Update the form below:</h2>
 </div>
 <div id="task_form">
-    <form method="post" action="task" th:object="${task}">
+    <form method="post" th:action="'task?id='+${task.id}" th:object="${task}">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="errors">Please correct the errors below.</p>
         </div>

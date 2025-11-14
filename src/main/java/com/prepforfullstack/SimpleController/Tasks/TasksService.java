@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -37,6 +36,17 @@ public class TasksService {
                 int taskId = task.getId();
                 task.setId(taskId-1);
             }
+        }
+    }
+
+    public void updateTask(Task outdatedTask,  Task updatedTask){
+        if (!updatedTask.getTaskDescription().equals(outdatedTask.getTaskDescription()) && !updatedTask.getTaskDeadline().equals(outdatedTask.getTaskDeadline())){
+            outdatedTask.setTaskDescription(updatedTask.getTaskDescription());
+            outdatedTask.setTaskDeadline(updatedTask.getTaskDeadline());
+        } else if (!updatedTask.getTaskDescription().equals(outdatedTask.getTaskDescription())){
+            outdatedTask.setTaskDescription(updatedTask.getTaskDescription());
+        } else if (!updatedTask.getTaskDeadline().equals(outdatedTask.getTaskDeadline())){
+            outdatedTask.setTaskDeadline(updatedTask.getTaskDeadline());
         }
     }
 

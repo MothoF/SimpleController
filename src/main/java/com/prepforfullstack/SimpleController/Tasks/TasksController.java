@@ -74,23 +74,15 @@ public class TasksController {
     }
 
     @RequestMapping(value = "task", method = RequestMethod.POST)
-    public String updateTask(Model model, @Valid Task task, BindingResult result){
+    public String updateTask(@RequestParam int id, @Valid Task task, BindingResult result){
         if (result.hasErrors()){
             return "update_task";
         }
 
-        Task oldTask = (Task) model.getAttribute("task");
+        Task oldTask = tasksService.getTaskById(id);
         assert oldTask != null;
-        System.out.println("oldTask Description = " + oldTask.getTaskDescription());
 
-        if (!task.getTaskDescription().equals(oldTask.getTaskDescription()) && !task.getTaskDeadline().equals(oldTask.getTaskDeadline())){
-            oldTask.setTaskDescription(task.getTaskDescription());
-            oldTask.setTaskDeadline(task.getTaskDeadline());
-        } else if (!task.getTaskDescription().equals(oldTask.getTaskDescription())){
-            oldTask.setTaskDescription(task.getTaskDescription());
-        } else {
-            oldTask.setTaskDeadline(task.getTaskDeadline());
-        }
+        tasksService.updateTask(oldTask,task);
 
         return "redirect:/tasks";
     }
