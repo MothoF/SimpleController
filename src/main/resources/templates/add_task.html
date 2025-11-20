@@ -10,7 +10,8 @@
         <h2>Fill out the form below:</h2>
     </div>
     <div id="task_form">
-        <form method="post" action="tasks" th:object="${task}">
+        <form method="post" th:action="@{/tasks}" th:object="${task}">
+<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
             <div th:if="${#fields.hasGlobalErrors()}">
                 <p class="errors">Please correct the errors below.</p>
             </div>

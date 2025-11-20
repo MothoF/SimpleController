@@ -2,6 +2,8 @@ package com.prepforfullstack.SimpleController.Tasks;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +24,13 @@ public class TasksController {
 
     @RequestMapping(value = "tasks",method = RequestMethod.GET)
     public String getTasksList(Model model){
-        String sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
+        String sessionUser;
+        try{
+            sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
+        } catch (NullPointerException e){
+            sessionUser = getLoggedInUser();
+        }
+//        String sessionUser = "Mothofeela";
         List<Task> userTasks = tasksService.getTaskByUser(sessionUser);
 
         System.out.println("sessionUser = " + sessionUser);
@@ -39,12 +47,20 @@ public class TasksController {
     }
 
     @RequestMapping(value = "tasks", method = RequestMethod.POST)
-    public String addTask(Model model, @Valid @ModelAttribute("task") Task task, BindingResult result){
+    public String addTask(Model model, @Valid Task task, BindingResult result){
         if (result.hasErrors()){
             return "add_task";
         }
-        String sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
+
+        String sessionUser;
+        try{
+            sessionUser = Objects.requireNonNull(model.getAttribute("username")).toString();
+        } catch (NullPointerException e){
+            sessionUser = getLoggedInUser();
+        }
+//        String sessionUser = "Mothofeela";
         task.setTaskMaster(sessionUser);
+        System.out.println("Task master has been set to: " + task.getTaskMaster());
         tasksService.addNewTask(task);
         System.out.println("You have successfully added a new task @"+sessionUser);
         return "redirect:/tasks";
@@ -85,5 +101,11 @@ public class TasksController {
         tasksService.updateTask(oldTask,task);
 
         return "redirect:/tasks";
+    }
+
+    private String getLoggedInUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        assert auth != null;
+        return auth.getName();
     }
 }
